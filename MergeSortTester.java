@@ -10,6 +10,8 @@
   sorted array until one array is empty. Add the rest of the elements of the second
   array into the sorted array. Repeat until you reach the top of the tree, where a
   fully sorted array awaits.
+
+
   
   BIG-OH CLASSIFICATION OF ALGORITHM:
   O(nlogn)
@@ -28,44 +30,71 @@
   Therefore, the runtime is O(nlogn).
   ======================================*/
 
-public class MergeSortTester 
-{
-
-	/******************************
-     * execution time analysis 
+public class MergeSortTester {
+     /*******************************
+     execution time analysis 
      Take system time (in nanoseconds) before sort and after sort. 
      Subtract two values to find total time elapsed.
      ******************************/
-    public static void main( String[] args ) 
-    {
-    	MergeSort ms = new MergeSort();
-		int[] oneItem = {(int)(Math.random()*101)};
-		
-		int[] tenItem = new int[10];
-		for (int i = 0; i < tenItem.length; i++){
-			tenItem[i] = (int)(Math.random()*101);
-		}
-		
-		int[] hundredItem = new int[100];
-		for (int i = 0; i < hundredItem.length; i++){
-			hundredItem[i] = (int)(Math.random()*101);
-		}
-		
-		int[][] lists = {oneItem, tenItem, hundredItem};
-		for (int i = 0; i < lists.length; i ++){
-			int[] itemList = lists[i];
-			ms.printArray(itemList);
-			
-			long startTime = System.nanoTime();
-			ms.printArray( ms.sort(itemList) );
-			
-			long endTime   = System.nanoTime();
-			long totalTime = endTime - startTime;
-			
-			System.out.println("Total time: " + totalTime + " nano seconds" );
-		}
-
-
-	}//end main
+    
+    public static void test(int l, int b) {
+	MergeSort ms = new MergeSort();
+	double[] r = new double[l];
+	System.out.println("running " + b + " tests (batch size) on arrays of sizes 1 to " + l + "\nsize:\tavg runtime\tratio to previous\tnlogn ratio");
+	//for every array length from 1 to l
+	for(int i = 1; i < l + 1; i++) {
+	    //run b test cases
+	    for(int j = 0; j < b; j++) {
+		int[] t = rfill(i);
+		long st = System.nanoTime();
+		ms.sort(t);
+		long et = System.nanoTime();
+		r[i - 1] += et - st;
+	    }
+	    //r[i - 1] /= b;
+	    System.out.println("len " + i + ":\t" + r[i - 1]/b + "\t"+r[i-1]/(i > 1 ? r[i-2] : r[i-1]) + "\t" + (i > 1 ? (i*Math.log(i))/(Math.log(i-1)*(i-1)) : 1));
+	}
+    }
+    
+    public static int[] rfill(int s) {
+	int[] a = new int[s];
+	for(int i = 0; i < a.length; i++) {
+	    a[i] = (int)(Math.random()*10);
+	}
+	return a;
+    }
 	
+
+    public static void main(String[] args) {
+    	/*
+	MergeSort ms = new MergeSort();
+	int[] oneItem = {(int)(Math.random()*101)};
+	
+	int[] tenItem = new int[10];
+	for (int i = 0; i < tenItem.length; i++){
+	    tenItem[i] = (int)(Math.random()*101);
+	}
+	
+	int[] hundredItem = new int[100];
+	for (int i = 0; i < hundredItem.length; i++){
+	    hundredItem[i] = (int)(Math.random()*101);
+	}
+	
+	int[][] lists = {oneItem, tenItem, hundredItem};
+	for (int i = 0; i < lists.length; i ++){
+	    int[] itemList = lists[i];
+	    ms.printArray(itemList);
+	    
+	    long startTime = System.nanoTime();
+	    ms.printArray( ms.sort(itemList) );
+	    
+	    long endTime   = System.nanoTime();
+	    long totalTime = endTime - startTime;
+	    
+	    System.out.println("Total time: " + totalTime + " nano seconds" );
+	    }
+	*/
+	test(9,1000000);	
+    }//end main
+    
 }// end class
