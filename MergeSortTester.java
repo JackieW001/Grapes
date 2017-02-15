@@ -45,14 +45,14 @@ public class MergeSortTester {
 	for(int i = 1; i < l + 1; i++) {
 	    //run b test cases
 	    for(int j = 0; j < b; j++) {
-		int[] t = rfill(i);
-		long st = System.nanoTime();
+		int[] t = rfill((int)Math.pow(i,2));
+		long st = System.currentTimeMillis();
 		ms.sort(t);
-		long et = System.nanoTime();
-		r[i - 1] += et - st;
+		long et = System.currentTimeMillis();
+		r[i - 1] += (et - st)*10000;
 	    }
 	    //r[i - 1] /= b;
-	    System.out.println("len " + i + ":\t" + r[i - 1]/b + "\t"+r[i-1]/(i > 1 ? r[i-2] : r[i-1]) + "\t" + (i > 1 ? (i*Math.log(i))/(Math.log(i-1)*(i-1)) : 1));
+	    System.out.println("(" + Math.pow(i,2) + "," + r[i - 1]/b + ")"); // + "\t"+r[i-1]/(i > 1 ? r[i-2] : r[i-1]) + "\t" + (i > 1 ? (i*Math.log(i))/(Math.log(i-1)*(i-1)) : 1));
 	}
     }
     
@@ -94,7 +94,7 @@ public class MergeSortTester {
 	    System.out.println("Total time: " + totalTime + " nano seconds" );
 	    }
 	*/
-	test(9,1000000);	
+	test(100,10000);	
     }//end main
     
 }// end class
