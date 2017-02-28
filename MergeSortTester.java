@@ -40,26 +40,26 @@ public class MergeSortTester {
     public static void test(int l, int b) {
 	MergeSort ms = new MergeSort();
 	double[] r = new double[l];
-	System.out.println("running " + b + " tests (batch size) on arrays of sizes 1 to " + l + "\nsize:\tavg runtime\tratio to previous\tnlogn ratio");
+	System.out.println("running " + b + " tests (batch size) on arrays of sizes 101 to " + l); // + "\nsize:\tavg runtime\tratio to previous\tnlogn ratio");
 	//for every array length from 1 to l
-	for(int i = 1; i < l + 1; i++) {
+	for(int i = 2001; i < l + 1; i++) {
 	    //run b test cases
 	    for(int j = 0; j < b; j++) {
-		int[] t = rfill((int)Math.pow(i,2));
+		int[] t = rfill(i);
 		long st = System.currentTimeMillis();
 		ms.sort(t);
 		long et = System.currentTimeMillis();
-		r[i - 1] += (et - st)*10000;
+		r[i - 1] += (et - st);
 	    }
 	    //r[i - 1] /= b;
-	    System.out.println("(" + Math.pow(i,2) + "," + r[i - 1]/b + ")"); // + "\t"+r[i-1]/(i > 1 ? r[i-2] : r[i-1]) + "\t" + (i > 1 ? (i*Math.log(i))/(Math.log(i-1)*(i-1)) : 1));
+	    System.out.println("(" + i + "," + r[i - 1] + ")"); // + "\t"+r[i-1]/(i > 1 ? r[i-2] : r[i-1]) + "\t" + (i > 1 ? (i*Math.log(i))/(Math.log(i-1)*(i-1)) : 1));
 	}
     }
     
     public static int[] rfill(int s) {
 	int[] a = new int[s];
 	for(int i = 0; i < a.length; i++) {
-	    a[i] = (int)(Math.random()*10);
+	    a[i] = (int)(Math.random()*10000);
 	}
 	return a;
     }
@@ -94,7 +94,7 @@ public class MergeSortTester {
 	    System.out.println("Total time: " + totalTime + " nano seconds" );
 	    }
 	*/
-	test(100,10000);	
+	test(10000000,1000);	
     }//end main
     
 }// end class
